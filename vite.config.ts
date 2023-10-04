@@ -10,6 +10,13 @@ export default defineConfig({
       resolves: [AntdResolve()],
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
 
   resolve: {
     alias: {

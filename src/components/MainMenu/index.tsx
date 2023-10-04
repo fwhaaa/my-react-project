@@ -7,8 +7,8 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Children, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 function getItem(
@@ -24,20 +24,6 @@ function getItem(
     label,
   } as MenuItem;
 }
-// const items: MenuItem[] = [
-//   getItem("栏目 1", "/page1", <PieChartOutlined />),
-//   getItem("栏目 2", "/page2", <DesktopOutlined />),
-//   getItem("User", "sub1", <UserOutlined />, [
-//     getItem("Tom", "3"),
-//     getItem("Bill", "4"),
-//     getItem("Alex", "5"),
-//   ]),
-//   getItem("Team", "sub2", <TeamOutlined />, [
-//     getItem("Team 1", "6"),
-//     getItem("Team 2", "8"),
-//   ]),
-//   getItem("Files", "9", <FileOutlined />),
-// ];
 
 const items: MenuItem[] = [
   {
@@ -90,19 +76,36 @@ const items: MenuItem[] = [
 
 const MainMenu: React.FC = () => {
   const navigateTo = useNavigate();
+  const currentRoute = useLocation();
+  console.log("加载了菜单", currentRoute);
   const menuClick = (e: { key: string }) => {
     console.log("点击了菜单", e.key);
     navigateTo(e.key);
   };
-  const [openkeys, setOpenkeys] = useState([""]);
+
   const hdOpenChange = (keys: string[]) => {
     setOpenkeys([keys[keys.length - 1]]);
   };
-
+  let firstOpenKeys: string = "";
+  function findKey(obj: { key: string }) {
+    return obj.key === currentRoute.pathname;
+  }
+  for (let i = 0; i < items.length; i++) {
+    if (
+      items[i]!["children"] &&
+      items[i]!["children"].length > 1 &&
+      items[i]!["children"].find(findKey)
+    ) {
+      console.log(items[i]!.key);
+      firstOpenKeys = items[i]!.key as string;
+      break;
+    }
+  }
+  const [openkeys, setOpenkeys] = useState([firstOpenKeys]);
   return (
     <Menu
       theme="dark"
-      defaultSelectedKeys={["/page1"]}
+      defaultSelectedKeys={[currentRoute.pathname]}
       mode="inline"
       items={items}
       openKeys={openkeys}

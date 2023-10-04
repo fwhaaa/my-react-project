@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import store from "./store";
+
 // 正确的样式引入顺序
 // 样式初始化一般放在最前面
 import "reset-css";
@@ -13,7 +16,9 @@ import { BrowserRouter } from "react-router-dom";
 // 状态管理
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

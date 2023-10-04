@@ -36,7 +36,6 @@ const View: React.FC = () => {
           style={{ margin: "16px 16px 0" }}
           className="site-layout-background"
         >
-          <div style={{ padding: 24, minHeight: 360 }}>bill is a cat.</div>
           <Outlet></Outlet>
         </Content>
         {/* 页脚部分 */}

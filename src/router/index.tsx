@@ -2,6 +2,7 @@ import { lazy } from "react";
 import Home from "../views/Home";
 import { Navigate } from "react-router-dom";
 import React from "react";
+import Login from "../views/Login";
 
 const Page1 = lazy(() => import("../views/page1"));
 const Page2 = lazy(() => import("../views/page2"));
@@ -30,6 +31,11 @@ const routes = [
       {
         path: "/page3/page301",
         element: withLoadingComponent(<Page301 />),
+      },
+
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
     ],
   },
